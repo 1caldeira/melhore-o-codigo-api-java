@@ -17,19 +17,19 @@ public class Pet {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
+
     @Column(name = "tipo")
     private TipoPet tipo;
 
-    @NotBlank
+
     @Column(name = "nome")
     private String nome;
 
-    @NotBlank
+
     @Column(name = "raca")
     private String raca;
 
-    @NotNull
+
     @Column(name = "idade")
     private Integer idade;
 

@@ -100,7 +100,7 @@ public class AdocaoService {
         Adocao adocao = adocaoRepository.getReferenceById(dto.idAdocao());
         adocao.setStatus(StatusAdocao.REPROVADO);
         adocao.setJustificativaStatus(dto.justificativa());
-        
+
         String emailTo = adocao.getTutor().getEmail();
         String subject = "Adoção reprovada";
         String message = "Olá " +adocao.getTutor().getNome() +
