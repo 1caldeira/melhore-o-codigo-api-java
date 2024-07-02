@@ -10,38 +10,18 @@ import java.util.Objects;
 @Entity
 @Table(name = "pets")
 public class Pet {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-
     @Enumerated(EnumType.STRING)
-
-    @Column(name = "tipo")
     private TipoPet tipo;
-
-
-    @Column(name = "nome")
     private String nome;
-
-
-    @Column(name = "raca")
     private String raca;
-
-
-    @Column(name = "idade")
     private Integer idade;
-
     @NotBlank
-    @Column(name = "cor")
     private String cor;
-
     @NotNull
-    @Column(name = "peso")
     private Float peso;
-
-    @Column(name = "adotado")
     private Boolean adotado;
 
     @ManyToOne

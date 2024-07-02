@@ -36,7 +36,7 @@ public class AdocaoService {
     public void solicitar(SolicitacaoAdocaoDTO dto){
         Pet pet = petRepository.getReferenceById(dto.idPet());
         Tutor tutor = tutorRepository.getReferenceById(dto.idTutor());
-        
+
         validadores.forEach(v -> v.validar(dto));
 
         Adocao adocao = new Adocao();
