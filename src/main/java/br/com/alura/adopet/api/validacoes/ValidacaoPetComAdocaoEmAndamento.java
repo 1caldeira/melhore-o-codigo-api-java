@@ -20,14 +20,10 @@ public class ValidacaoPetComAdocaoEmAndamento implements ValidadorAdocoes {
     private AdocaoRepository adocaoRepository;
 
     public void validar(SolicitacaoAdocaoDTO dto){
-        List<Adocao> adocoesPetsDoMesmoId = adocaoRepository.findAllById(dto.idPet());
-        Pet pet = petRepository.getReferenceById(dto.idPet());
-        if(adocoesPetsDoMesmoId.size() > 0){
-            for (Adocao adocao:adocoesPetsDoMesmoId) {
-                if(adocao.getPet() == pet && adocao.getStatus() == StatusAdocao.AGUARDANDO_AVALIACAO){
+        boolean petTemAdocaoEmAndamento = adocaoRepository.existsByPetIdAndStatus(dto.idPet(), StatusAdocao.AGUARDANDO_AVALIACAO)
+                if(petTemAdocaoEmAndamento){
                     throw new ValidacaoException("Pet já está aguardando adocao em andamento");
                 }
             }
-        }
-    }
 }
+

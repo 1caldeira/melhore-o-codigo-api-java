@@ -10,6 +10,7 @@ import java.util.List;
 public interface AdocaoRepository extends JpaRepository<Adocao, Long> {
 
     List<Adocao> findAllById(Long id);
+    boolean existsByPetIdAndStatus(Long idPet, StatusAdocao status);
 
     @Query("SELECT a FROM Adocao a WHERE a.tutor_id = :id AND a.status = :status")
     List<Adocao> findAdocoesAprovadasFromTutor(Long id, StatusAdocao status);
