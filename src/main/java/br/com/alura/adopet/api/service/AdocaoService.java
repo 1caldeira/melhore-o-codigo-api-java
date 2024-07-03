@@ -39,12 +39,7 @@ public class AdocaoService {
 
         validadores.forEach(v -> v.validar(dto));
 
-        Adocao adocao = new Adocao();
-        adocao.setData(LocalDateTime.now());
-        adocao.setStatus(StatusAdocao.AGUARDANDO_AVALIACAO);
-        adocao.setPet(pet);
-        adocao.setTutor(tutor);
-        adocao.setMotivo(dto.motivo());
+        Adocao adocao = new Adocao(pet, tutor, dto.motivo());
         adocaoRepository.save(adocao);
 
 
@@ -61,7 +56,7 @@ public class AdocaoService {
 
     public void aprovar(AprovacaoAdocaoDTO dto){
         Adocao adocao = adocaoRepository.getReferenceById(dto.idAdocao());
-        adocao.setStatus(StatusAdocao.APROVADO);
+        adocao.marcarComoAprovada();
 
         String emailTo = adocao.getTutor().getEmail();
         String subject = "Adoção aprovada";
@@ -77,8 +72,7 @@ public class AdocaoService {
 
     public void reprovar(ReprovacaoAdocaoDTO dto){
         Adocao adocao = adocaoRepository.getReferenceById(dto.idAdocao());
-        adocao.setStatus(StatusAdocao.REPROVADO);
-        adocao.setJustificativaStatus(dto.justificativa());
+        adocao.marcarComoReprovada(dto.justificativa());
 
         String emailTo = adocao.getTutor().getEmail();
         String subject = "Adoção reprovada";

@@ -28,7 +28,7 @@ public class Abrigo {
     @Email
     private String email;
 
-    @OneToMany(mappedBy = "abrigo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "abrigo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Pet> pets;
 
     @Override
