@@ -16,6 +16,7 @@ public class Adocao {
     private Long id;
     private LocalDateTime data;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="tutor_id")
     private Tutor tutor;
     @OneToOne(fetch = FetchType.LAZY)
     private Pet pet;
