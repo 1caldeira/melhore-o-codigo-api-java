@@ -4,6 +4,8 @@ import br.com.alura.adopet.api.dto.DadosDetalhesAbrigo;
 import br.com.alura.adopet.api.dto.SolicitacaoCadastroAbrigoDTO;
 import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.service.AbrigoService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,11 @@ public class AbrigoController {
     private AbrigoService abrigoService;
 
     @GetMapping
-    public ResponseEntity<List<DadosDetalhesAbrigo>> listar() {
+    public ResponseEntity<String> listar() {
         List<DadosDetalhesAbrigo> response = abrigoService.listar();
-        return ResponseEntity.ok(response);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(response);
+        return ResponseEntity.ok(json);
     }
 
     @PostMapping

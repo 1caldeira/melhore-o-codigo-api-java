@@ -2,46 +2,45 @@ package br.com.alura.adopet.api.controller;
 
 import br.com.alura.adopet.api.dto.DadosDetalhesPet;
 import br.com.alura.adopet.api.dto.PetDTO;
-import br.com.alura.adopet.api.model.Abrigo;
-import br.com.alura.adopet.api.model.Pet;
-import br.com.alura.adopet.api.repository.PetRepository;
 import br.com.alura.adopet.api.service.PetService;
-import jakarta.persistence.EntityNotFoundException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class PetController {
 
     @Autowired
-    private PetRepository repository;
-    @Autowired
     private PetService petService;
 
-    @GetMapping
-    public ResponseEntity<List<DadosDetalhesPet>> listarTodosDisponiveis() {
+    @GetMapping("/{idOuNome}/pets/disponiveis")
+    public ResponseEntity<String> listarTodosDisponiveis() {
         List<DadosDetalhesPet> disponiveis = petService.listarTodosNaoAdotados();
-        return ResponseEntity.ok(disponiveis);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return ResponseEntity.ok(gson.toJson(disponiveis));
     }
 
     @GetMapping("/{idOuNome}/pets")
-    public ResponseEntity<List<DadosDetalhesPet>> listarPets(@PathVariable String idOuNome) {
-            List<DadosDetalhesPet> pets = petService.listarPorAbrigo(idOuNome);
-            return ResponseEntity.ok(pets);
+    public ResponseEntity<String> listarPets(@PathVariable String idOuNome) {
+
+        List<DadosDetalhesPet> pets = petService.listarPorAbrigo(idOuNome);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return ResponseEntity.ok(gson.toJson(pets));
         }
 
 
     @PostMapping("/{idOuNome}/pets")
     @Transactional
     public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid PetDTO petDto) {
-            String response = petService.cadastrarPet(idOuNome, petDto);
-            return ResponseEntity.ok(response);
+        String response = petService.cadastrarPet(idOuNome, petDto);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return ResponseEntity.ok(gson.toJson(response));
         }
     }
 
