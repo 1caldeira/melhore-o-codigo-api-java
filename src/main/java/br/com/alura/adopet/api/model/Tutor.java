@@ -1,5 +1,7 @@
 package br.com.alura.adopet.api.model;
 
+import br.com.alura.adopet.api.dto.SolicitacaoAtualizacaoTutorDTO;
+import br.com.alura.adopet.api.dto.SolicitacaoCadastroTutorDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -15,26 +17,35 @@ public class Tutor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @NotBlank
-    @Column(name = "nome")
     private String nome;
 
     @NotBlank
     @Pattern(regexp = "\\(?\\d{2}\\)?\\d?\\d{4}-?\\d{4}")
-    @Column(name = "telefone")
     private String telefone;
 
     @NotBlank
     @Email
-    @Column(name = "email")
     private String email;
 
     @OneToMany(mappedBy = "tutor")
     @JsonManagedReference("tutor_adocoes")
     private List<Adocao> adocoes;
+
+
+    public Tutor() {
+    }
+
+    public Tutor(SolicitacaoCadastroTutorDTO dto){
+        this.email = dto.email();
+        this.nome = dto.nome();
+        this.telefone = dto.telefone();
+        if(dto.id()!=null){
+            this.id = dto.id();
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -87,5 +98,28 @@ public class Tutor {
 
     public void setAdocoes(List<Adocao> adocoes) {
         this.adocoes = adocoes;
+    }
+
+    public void atualizar(SolicitacaoAtualizacaoTutorDTO solicitacaoAtualizacaoTutorDTO) {
+        if(solicitacaoAtualizacaoTutorDTO.email()!=null){
+            this.email = solicitacaoAtualizacaoTutorDTO.email();
+        }
+        if(solicitacaoAtualizacaoTutorDTO.nome()!=null){
+            this.nome = solicitacaoAtualizacaoTutorDTO.nome();
+        }
+        if(solicitacaoAtualizacaoTutorDTO.telefone()!=null){
+            this.telefone = solicitacaoAtualizacaoTutorDTO.telefone();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "{"
+                + "\"id\":\"" + id + "\""
+                + ", \"nome\":\"" + nome + "\""
+                + ", \"telefone\":\"" + telefone + "\""
+                + ", \"email\":\"" + email + "\""
+                + ", \"adocoes\":" + adocoes
+                + "}";
     }
 }

@@ -78,4 +78,14 @@ public class Abrigo {
     public void setPets(List<Pet> pets) {
         this.pets = pets;
     }
+
+    @Override
+    public String toString() {
+        return "{"
+                + "\"id\":\"" + id + "\""
+                + ", \"nome\":\"" + nome + "\""
+                + ", \"telefone\":\"" + telefone + "\""
+                + ", \"email\":\"" + email + "\""
+                + "}";
+    }
 }

@@ -29,7 +29,7 @@ public class Pet {
     @JoinColumn(name = "abrigo_id")
     private Abrigo abrigo;
 
-    @OneToOne(mappedBy = "pet")
+    @OneToOne(mappedBy = "pet", fetch = FetchType.LAZY)
     @JsonBackReference("adocao_pets")
     private Adocao adocao;
 
@@ -137,13 +137,19 @@ public class Pet {
         this.abrigo = abrigo;
     }
 
-    public Adocao getAdocao() {
-        return adocao;
+    @Override
+    public String toString() {
+        return "{"
+                + "\"id\":\"" + id + "\""
+                + ", \"tipo\":\"" + tipo + "\""
+                + ", \"nome\":\"" + nome + "\""
+                + ", \"raca\":\"" + raca + "\""
+                + ", \"idade\":\"" + idade + "\""
+                + ", \"cor\":\"" + cor + "\""
+                + ", \"peso\":\"" + peso + "\""
+                + ", \"adotado\":\"" + adotado + "\""
+                + ", \"abrigo\":" + abrigo
+                + ", \"adocao\":" + adocao
+                + "}";
     }
-
-    public void setAdocao(Adocao adocao) {
-        this.adocao = adocao;
-    }
-
-
 }

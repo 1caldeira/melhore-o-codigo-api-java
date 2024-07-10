@@ -5,6 +5,7 @@ import br.com.alura.adopet.api.dto.PetDTO;
 import br.com.alura.adopet.api.service.PetService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,8 @@ public class PetController {
     @Transactional
     public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid PetDTO petDto) {
         String response = petService.cadastrarPet(idOuNome, petDto);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return ResponseEntity.ok(gson.toJson(response));
+        return ResponseEntity.ok(response);
         }
+
     }
 
