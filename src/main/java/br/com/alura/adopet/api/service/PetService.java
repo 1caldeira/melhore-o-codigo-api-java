@@ -38,11 +38,9 @@ public class PetService {
 
         Abrigo abrigo = getAbrigo(idOuNome);
         List<Pet> pets = abrigo.getPets();
-        return pets.stream().map(p -> new DadosDetalhesPet(p.getId(),
-                                p.getTipo(),
-                                p.getNome(),
-                                p.getRaca(),
-                                p.getIdade())).toList();
+        return pets.stream()
+                .map(DadosDetalhesPet::new)
+                .toList();
     }
 
 
@@ -66,8 +64,8 @@ public class PetService {
             } catch (EntityNotFoundException e) {
                 throw new ValidacaoException("Abrigo não encontrado!");
             }
-
             return abrigo;
+
         }else {
             Optional<Abrigo> abrigoOptional = abrigoRepository.findByNome(idOuNome);
             if (abrigoOptional.isEmpty()) {

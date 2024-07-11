@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 
 @Service
 public class AbrigoService {
@@ -32,7 +34,7 @@ public class AbrigoService {
         List<Abrigo> abrigos = abrigoRepository.findAll();
         if (!abrigos.isEmpty()) {
             return abrigos.stream()
-                    .map(abrigo -> new DadosDetalhesAbrigo(abrigo.getId(), abrigo.getNome(), abrigo.getTelefone(), abrigo.getEmail()))
+                    .map(DadosDetalhesAbrigo::new)
                     .toList();
         } else {
             throw new ValidacaoException("Nao ha abrigos para listar!");
